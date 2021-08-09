@@ -14,7 +14,9 @@ jobs:
       uses: ./
       with:
         updater: debian
+        image: vulnerables/web-dvwa
         report_path: clair-report.xml
+        report_format: xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
