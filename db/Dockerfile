@@ -1,1 +1,0 @@
-FROM arminc/clair-db:latest

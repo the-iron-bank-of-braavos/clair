@@ -1,35 +1,52 @@
-version: '2.1'
+version: '2.4'
 
 services:
   postgres:
-    image: postgres:9.6
-    restart: unless-stopped
+    container_name: clair-db
+    image: postgres@sha256:fab2a4a9fa7af0464b665f90818894481b524035ddc337bf09d5321624cee644
+#    cpus: '0.40'
+#    mem_limit: 2g
+    networks:
+      - clair_network
     volumes:
-      - ./postgres-data/:/var/lib/postgresql/data:rw
+      - postgres-data/:/var/lib/postgresql/data:rw
     environment:
-      - POSTGRES_PASSWORD=ChangeMe
+      - POSTGRES_PASSWORD=clair
       - POSTGRES_USER=clair
       - POSTGRES_DB=clair
-    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clair"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5432:5432
+
   clair:
-    image: quay.io/coreos/clair:v2.0.0
-    restart: unless-stopped
+    container_name: clair
+#    cpus: '0.60'
+#    mem_limit: 4g
+    networks:
+      clair_network:
+        aliases:
+          - clair
+    image: quay.io/projectquay/clair:4.0.6
+    environment:
+      - CLAIR_MODE=combo
+      - CLAIR_CONF=/config/config.yaml
     volumes:
-      - ./clair-config/:/config/:ro
-      - ./clair-tmp/:/tmp/:rw
-    depends_on: 
+      - ./config.yaml:/config/config.yaml:ro
+      - /tmp/:/tmp/
+    depends_on:
       postgres:
-        condition: service_started
-    command: [--log-level=debug, --config, /config/config.yml]
-    
-  clairctl:
-    image: jgsqware/clairctl:latest
-    restart: unless-stopped
-    environment: 
-      - DOCKER_API_VERSION=1.24
-    volumes:
-      - ./clairctl-reports/:/reports/:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on: 
-      clair: 
-        condition: service_started
+        condition: service_healthy
+    links:
+      - postgres
+    ports:
+      - 6060:6060
+
+volumes:
+  postgres-data:
+
+networks:
+  clair_network:

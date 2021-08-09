@@ -1,1 +1,0 @@
-FROM jgsqware/clairctl:latest

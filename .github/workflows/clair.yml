@@ -1,0 +1,22 @@
+name: prueba-POC
+
+on: [push]
+       
+jobs:  
+  clair-scan:
+    name: Scan image with Clair
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Clair Test
+      id: clairtest
+      uses: ./
+      with:
+        updater: debian
+        report_path: clair-report.xml
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: clair-result
+        path: clair-report.xml
