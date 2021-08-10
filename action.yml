@@ -18,6 +18,7 @@ runs:
       shell: bash  
     - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
       shell: bash
+    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
+      shell: bash
     - run: docker exec clair clairctl -D report -o xml vulnerables/web-dvwa > ${{ inputs.report_path }}
       shell: bash
-    

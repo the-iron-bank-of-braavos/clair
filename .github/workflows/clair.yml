@@ -20,5 +20,5 @@ jobs:
       with:
         name: clair-result
         path: clair-report.xml
-    - name: Docker in Docker
-      run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
+    - name: Docker in Clair
+      run: docker exec clair docker ps
