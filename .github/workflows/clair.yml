@@ -20,5 +20,3 @@ jobs:
       with:
         name: clair-result
         path: clair-report.xml
-    - name: Docker in Clair
-      run: docker exec clair docker ps
