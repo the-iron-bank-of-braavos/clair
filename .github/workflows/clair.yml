@@ -14,11 +14,13 @@ jobs:
       uses: ./
       with:
         updater: debian
-        image: vulnerables/web-dvwa
         report_path: clair-report.xml
-        report_format: xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: clair-result
         path: clair-report.xml
+    - name: Docker in Docker
+      run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
+    - name: Docker in Clair
+      run: docker exec clair docker ps

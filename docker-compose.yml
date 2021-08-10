@@ -37,6 +37,8 @@ services:
     volumes:
       - ./config.yaml:/config/config.yaml:ro
       - /tmp/:/tmp/
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
     depends_on:
       postgres:
         condition: service_healthy
