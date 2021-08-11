@@ -17,7 +17,7 @@ jobs:
       id: clairtest
       uses: ./
       with:
-       image: "debian:7.3"
+       image: "debian:experimental-20181112"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
