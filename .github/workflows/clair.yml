@@ -9,12 +9,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
+    - name: Pull image to local registry
+      run: |
+       docker pull vulnerables/web-dvwa
+       docker tag vulnerables/web-dvwa test/test:1.0.0
     - name: Clair Test
       id: clairtest
       uses: ./
       with:
-        updater: debian
-        report_path: clair-report.xml
+       image: "test/test:1.0.0"
+       report_format: xml
+       updater: debian
+       report_path: clair-report.xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
