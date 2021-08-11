@@ -17,7 +17,7 @@ jobs:
       id: clairtest
       uses: ./
       with:
-       image: "dedian:unstable-slim"
+       image: "debian:unstable-slim"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
