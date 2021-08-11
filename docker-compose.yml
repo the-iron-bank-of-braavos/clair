@@ -46,6 +46,18 @@ services:
       - postgres
     ports:
       - 6060:6060
+      
+  clairctl:
+    image: jgsqware/clairctl:latest
+    environment: 
+      - DOCKER_API_VERSION=1.24
+    volumes:
+      - ./docker-compose-data/clairctl-reports/:/reports/:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /usr/bin/docker:/usr/bin/docker
+    depends_on: 
+      clair: 
+        condition: service_started
 
 volumes:
   postgres-data:
