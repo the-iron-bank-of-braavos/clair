@@ -48,6 +48,7 @@ services:
       - 6060:6060
       
   clairctl:
+    container_name: clairctl
     image: jgsqware/clairctl:latest
     environment: 
       - DOCKER_API_VERSION=1.24
