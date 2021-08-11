@@ -30,7 +30,7 @@ services:
       clair_network:
         aliases:
           - clair
-    image: quay.io/projectquay/clair:4.0.6
+    image: quay.io/projectquay/clair:4.2.0
     environment:
       - CLAIR_MODE=combo
       - CLAIR_CONF=/config/config.yaml
