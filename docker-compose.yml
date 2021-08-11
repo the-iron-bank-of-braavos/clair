@@ -34,6 +34,7 @@ services:
     environment:
       - CLAIR_MODE=combo
       - CLAIR_CONF=/config/config.yaml
+      - IP_REG=${IP_REG}
     volumes:
       - ./config.yaml:/config/config.yaml:ro
       - /tmp/:/tmp/
@@ -44,21 +45,19 @@ services:
         condition: service_healthy
     links:
       - postgres
+      - registry
     ports:
       - 6060:6060
-      
-  clairctl:
-    container_name: clairctl
-    image: jgsqware/clairctl:latest
-    environment: 
-      - DOCKER_API_VERSION=1.24
-    volumes:
-      - ./docker-compose-data/clairctl-reports/:/reports/:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /usr/bin/docker:/usr/bin/docker
-    depends_on: 
-      clair: 
-        condition: service_started
+  
+  registry:
+    container_name: registry
+    networks:
+      clair_network:
+        aliases:
+          - registry
+    image: registry:2.7
+    ports:
+      - 5000:5000
 
 volumes:
   postgres-data:
