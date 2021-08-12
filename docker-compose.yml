@@ -48,7 +48,7 @@ services:
       - registry
     ports:
       - 6060:6060
-  
+
   registry:
     container_name: registry
     networks:
