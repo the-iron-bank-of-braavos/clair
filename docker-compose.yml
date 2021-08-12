@@ -49,6 +49,7 @@ services:
       #- IP_REG=${IP_REG}
     volumes:
       - ./config.yaml:/config/config.yaml:ro
+      - ./clairctl-linux-amd64:/clairctl:ro
       - /tmp/:/tmp/
     depends_on:
       - "postgres"
