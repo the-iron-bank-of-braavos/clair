@@ -16,7 +16,6 @@ inputs:
     description: 'Container image to scan'
     required: true
 
-
 runs:
   using: "composite"
   steps:
