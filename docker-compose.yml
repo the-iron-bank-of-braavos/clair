@@ -54,7 +54,7 @@ services:
       - "postgres"
     links:
       - postgres
-      # - registry
+      - registry
     ports:
       - 6060:6060
 
