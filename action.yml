@@ -21,8 +21,6 @@ runs:
   steps:
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
-    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
-      shell: bash
     - run: docker-compose up -d
       shell: bash
     - run: docker tag vulnerables/web-dvwa localhost:5000/${{ inputs.image }}
