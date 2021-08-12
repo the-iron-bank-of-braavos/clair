@@ -23,7 +23,7 @@ runs:
       shell: bash
     - run: |
         docker-compose up -d && docker exec clair clairctl -D report -o ${{ inputs.report_format }} vulnerables/web-dvwa > ${{ inputs.report_path }}.${{ inputs.report_format }}
-    
+      shell: bash
 #    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
 #      shell: bash
 #    - run: docker-compose up -d
