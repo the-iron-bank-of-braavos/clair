@@ -58,16 +58,6 @@ services:
     ports:
       - 6060:6060
 
-#  registry:
-#    container_name: registry
-#    networks:
-#      clair:
-#        aliases:
-#          - registry
-#    image: registry:2.7
-#    ports:
-#      - 5000:5000
-
 volumes:
   postgres-data:
 
