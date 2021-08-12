@@ -17,7 +17,7 @@ jobs:
       id: clairtest
       uses: ./
       with:
-       image: "$IP_REG:5000/test"
+       image: "registry:5000/test"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
