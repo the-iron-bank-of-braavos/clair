@@ -26,8 +26,6 @@ runs:
       shell: bash
     - run: docker-compose up -d
       shell: bash
-    - run: export IP_REG=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' registry) && docker-compose up -d
-      shell: bash
     - run: docker tag vulnerables/web-dvwa localhost:5000/test
       shell: bash
     - run: docker push localhost:5000/test
