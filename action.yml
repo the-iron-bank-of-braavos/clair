@@ -29,11 +29,13 @@ runs:
 #      shell: bash
 #    - run: docker pull vulnerables/web-dvwa && docker tag vulnerables/web-dvwa:latest web-dvwa:test-action && docker image ls && docker manifest create web-dvwa:test-action --platform linux/amd64 && sleep 5
     - run: |
-        docker build -t localhost/ivan:test -f - . << EOF
+        docker build -t ivan:test -f - . << EOF
         FROM vulnerables/web-dvwa:latest
         EOF
       shell: bash
-    - run: docker-compose up -d && docker exec clair /clairctl analyze vulnerables/web-dvwa:latest
+    - run: docker-compose up -d && docker exec clair /clairctl report vulnerables/web-dvwa:latest
+      shell: bash
+    - run: docker-compose up -d && docker exec clair /clairctl report ivan:test
       shell: bash
     #- run: docker-compose up -d && docker exec clair clairctl -D report -o ${{ inputs.report_format }} ghcr.io/the-iron-bank-of-braavos/clair/ivan:test > ${{ inputs.report_path }}
     #  shell: bash
