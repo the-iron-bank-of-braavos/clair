@@ -33,7 +33,7 @@ runs:
         FROM vulnerables/web-dvwa:latest
         EOF
       shell: bash
-    - run: docker-compose up -d && docker exec clair /clairctl report vulnerables/web-dvwa:latest
+    - run: docker-compose up -d && docker exec clair /clairctl analyze ivan:test
       shell: bash
     - run: docker-compose up -d && docker exec clair /clairctl report ivan:test
       shell: bash
