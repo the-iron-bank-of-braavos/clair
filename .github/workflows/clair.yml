@@ -16,7 +16,7 @@ jobs:
       id: clairtest
       uses: ./
       with:
-       image: ":5000/test"
+       image: "test"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
