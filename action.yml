@@ -25,7 +25,7 @@ runs:
       shell: bash
     - run: while true; do echo "Checking Clair Status..." && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
       shell: bash
-    - run: echo $BELCEBUS_PAT | docker login ghcr.io -u ivanamat --password-stdin
+    - run: docker login ghcr.io -u ivanamat -password $BELCEBUS_PAT
       shell: bash
 #    - run: docker-compose ps
 #      shell: bash
