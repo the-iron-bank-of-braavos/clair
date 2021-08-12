@@ -12,12 +12,11 @@ jobs:
     - name: Pull image to local registry
       run: |
        docker pull vulnerables/web-dvwa
-       docker tag vulnerables/web-dvwa test/test:1.0.0
     - name: Clair Test
       id: clairtest
       uses: ./
       with:
-       image: "registry:5000/test"
+       image: ":5000/test"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
