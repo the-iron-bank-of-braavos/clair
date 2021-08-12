@@ -33,5 +33,5 @@ runs:
       shell: bash
     - run: |
         export IP_REG=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' registry) && docker-compose up -d
-        docker exec clair clairctl -D report -o ${{ inputs.report_format }} $IP_REG${{ inputs.image }} > ${{ inputs.report_path }}
+        docker exec clair clairctl -D report -o ${{ inputs.report_format }} $IP_REG:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash      
