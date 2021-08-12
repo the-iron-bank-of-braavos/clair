@@ -25,9 +25,9 @@ runs:
       shell: bash
     - run: docker-compose up -d
       shell: bash
-    - run: docker tag vulnerables/web-dvwa localhost${{ inputs.image }}
+    - run: docker tag vulnerables/web-dvwa localhost:5000/${{ inputs.image }}
       shell: bash
-    - run: docker push localhost${{ inputs.image }}
+    - run: docker push localhost:5000/${{ inputs.image }}
       shell: bash
     - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
       shell: bash
