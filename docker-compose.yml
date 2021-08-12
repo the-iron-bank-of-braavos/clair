@@ -1,13 +1,15 @@
-version: '2.4'
+version: '3.7'
 
 services:
   postgres:
-    container_name: clair-db
+    container_name: postgres
     image: postgres@sha256:fab2a4a9fa7af0464b665f90818894481b524035ddc337bf09d5321624cee644
 #    cpus: '0.40'
 #    mem_limit: 2g
     networks:
-      - clair_network
+      clair:
+        aliases:
+          - postgres
     volumes:
       - postgres-data/:/var/lib/postgresql/data:rw
     environment:
@@ -27,22 +29,21 @@ services:
 #    cpus: '0.60'
 #    mem_limit: 4g
     networks:
-      clair_network:
+      clair:
         aliases:
           - clair
     image: quay.io/projectquay/clair:4.2.0
     environment:
       - CLAIR_MODE=combo
       - CLAIR_CONF=/config/config.yaml
-      - IP_REG=${IP_REG}
+      #- IP_REG=${IP_REG}
     volumes:
       - ./config.yaml:/config/config.yaml:ro
       - /tmp/:/tmp/
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     depends_on:
-      postgres:
-        condition: service_healthy
+      - "postgres"
     links:
       - postgres
       - registry
@@ -52,7 +53,7 @@ services:
   registry:
     container_name: registry
     networks:
-      clair_network:
+      clair:
         aliases:
           - registry
     image: registry:2.7
@@ -63,4 +64,10 @@ volumes:
   postgres-data:
 
 networks:
-  clair_network:
+  clair:
+    name: clair
+    
+#networks:
+#  clair:
+#    external:
+#      name: clair
