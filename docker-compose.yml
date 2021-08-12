@@ -1,15 +1,15 @@
 version: '3.7'
 
 services:
-  registry:
-    container_name: registry
-    networks:
-      clair_network:
-        aliases:
-          - registry
-    image: registry:2.7
-    ports:
-      - 5000:5000
+#  registry:
+#    container_name: registry
+#    networks:
+#      clair_network:
+#        aliases:
+#          - registry
+#    image: registry:2.7
+#    ports:
+#      - 5000:5000
       
   postgres:
     container_name: postgres
