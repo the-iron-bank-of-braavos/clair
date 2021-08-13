@@ -30,10 +30,10 @@ runs:
     - run: docker-compose ps
       shell: bash
     - run: |
-        docker build -t registry:5000/ivanamat/demo:test -f - . << EOF
+        docker build -t localhost:5000/ivanamat/demo:test -f - . << EOF
         FROM vulnerables/web-dvwa:latest
         EOF
-        docker push registry:5000/ivanamat/demo:test
+        docker push localhost:5000/ivanamat/demo:test
       shell: bash
     - run: |
         docker-compose up -d
