@@ -29,10 +29,10 @@ runs:
       shell: bash
 #    - run: docker pull vulnerables/web-dvwa && docker tag vulnerables/web-dvwa:latest web-dvwa:test-action && docker image ls && docker manifest create web-dvwa:test-action --platform linux/amd64 && sleep 5
     - run: |
-        docker build -t registry/demo:test -f - . << EOF
+        docker build -t registry:5000/demo:test -f - . << EOF
         FROM vulnerables/web-dvwa:latest
         EOF
-        docker push registry/demo:test
+        docker push registry:5000/demo:test
       shell: bash
     - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 analyze --local demo:test
       shell: bash
