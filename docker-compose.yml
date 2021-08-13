@@ -42,8 +42,8 @@ services:
       clair:
         aliases:
           - clair
-    #image: quay.io/projectquay/clair:4.2.0
-    image: quay.io/coreos/clair
+    image: quay.io/projectquay/clair:4.2.0
+    #image: quay.io/coreos/clair
     environment:
       - CLAIR_MODE=combo
       - CLAIR_CONF=/config/config.yaml
