@@ -54,10 +54,8 @@ services:
       - ./clairctl-linux-amd64:/clairctl-linux-amd64:ro
       - /tmp/:/tmp/
     depends_on:
-      registry:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
+      - registry
+      - postgres
     links:
       - "registry:local-registry"
       - "postgres"
