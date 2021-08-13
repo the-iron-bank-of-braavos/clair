@@ -6,7 +6,7 @@ services:
     networks:
       clair:
         aliases:
-          - clair
+          - registry
     image: registry:2.7
     ports:
       - 5000:5000
