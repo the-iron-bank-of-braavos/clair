@@ -35,6 +35,8 @@ services:
 
   clair:
     container_name: clair
+    cpus: '0.60'
+    mem_limit: 4g
     networks:
       clair:
         aliases:
