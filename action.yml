@@ -32,6 +32,7 @@ runs:
         FROM vulnerables/web-dvwa:latest
         EOF
         docker push registry:5000/ivanamat/demo:test
+      shell: bash
     - run: |
         docker-compose up -d
         docker exec clair clairctl -D report -o ${{ inputs.report_format }} registry:5000/ivanamat/demo:test > ${{ inputs.report_path }}
