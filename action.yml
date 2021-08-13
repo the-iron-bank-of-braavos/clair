@@ -34,6 +34,10 @@ runs:
         EOF
         docker push registry.local:5000/ivanamat/demo:test
       shell: bash
+    - run: docker exec -it clair curl registry.local
+      shell: bash
+    - run: docker exec -it clair curl registry.local:5000
+      shell: bash
     - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 analyze --local registry.local:5000/ivanamat/demo:test
       shell: bash
     - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 report --local registry.local:5000/ivanamat/demo:test
