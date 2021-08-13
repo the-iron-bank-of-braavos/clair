@@ -45,6 +45,7 @@ services:
         aliases:
           - clair
     image: quay.io/projectquay/clair:4.2.0
+    restart: always
     environment:
       - CLAIR_MODE=combo
       - CLAIR_CONF=/config/config.yaml
