@@ -25,8 +25,8 @@ runs:
       shell: bash
     - run: while true; do echo "Checking Clair Status..." && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
       shell: bash
-    - run: docker-compose ps
-      shell: bash
+#    - run: docker-compose ps
+#      shell: bash
 #    - run: docker pull vulnerables/web-dvwa && docker tag vulnerables/web-dvwa:latest web-dvwa:test-action && docker image ls && docker manifest create web-dvwa:test-action --platform linux/amd64 && sleep 5
     - run: |
         docker build -t registry:5000/demo:test -f - . << EOF
