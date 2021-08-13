@@ -19,8 +19,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
-      shell: bash
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
     - run: docker-compose up -d
@@ -34,9 +32,10 @@ runs:
         docker build -t demo:test -f - . << EOF
         FROM vulnerables/web-dvwa:latest
         EOF
+        docker push registry:5000/demo:test
       shell: bash
-    #- run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 analyze --local demo:test
-    #  shell: bash
+    - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 analyze --local demo:test
+      shell: bash
     - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 report --local demo:test
       shell: bash
     #- run: docker-compose up -d && docker exec clair clairctl -D report -o ${{ inputs.report_format }} ghcr.io/the-iron-bank-of-braavos/clair/ivan:test > ${{ inputs.report_path }}
