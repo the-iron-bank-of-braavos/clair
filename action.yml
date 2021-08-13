@@ -19,6 +19,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
+      shell: bash
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
     - run: docker-compose up -d

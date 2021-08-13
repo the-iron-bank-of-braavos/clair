@@ -1,7 +1,17 @@
 version: '3.7'
 
 services:
-      
+
+  registry:
+    container_name: local-registry
+    networks:
+      clair:
+        aliases:
+          - registry
+    image: registry:2.7
+    ports:
+      - 5000:5000
+
   postgres:
     container_name: postgres
     image: postgres@sha256:fab2a4a9fa7af0464b665f90818894481b524035ddc337bf09d5321624cee644
@@ -23,16 +33,6 @@ services:
     ports:
       - 5432:5432
 
-  registry:
-    container_name: registry
-    networks:
-      clair:
-        aliases:
-          - registry
-    image: registry:2.7
-    ports:
-      - 5000:5000
-      
   clair:
     container_name: clair
     networks:
@@ -49,11 +49,11 @@ services:
       - ./clairctl-linux-amd64:/clairctl-linux-amd64:ro
       - /tmp/:/tmp/
     depends_on:
-      - "postgres"
       - "registry"
+      - "postgres"
     links:
-      - postgres
-      - registry
+      - "registry:local-registry"
+      - "postgres"
     ports:
       - 6060:6060
 
