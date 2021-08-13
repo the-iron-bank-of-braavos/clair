@@ -49,6 +49,8 @@ services:
       - CLAIR_CONF=/config/config.yaml
       #- IP_REG=${IP_REG}
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
       - ./config.yaml:/config/config.yaml:ro
       - ./clairctl-linux-amd64:/clairctl-linux-amd64:ro
       - /tmp/:/tmp/
