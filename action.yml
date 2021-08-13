@@ -19,7 +19,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: cat registry > /etc/hosts
+    - run: sudo cat registry > /etc/hosts
       shell: bash
     - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
       shell: bash
