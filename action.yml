@@ -19,45 +19,19 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
+    - run: cat registry > /etc/hosts
       shell: bash
-    - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
+    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
       shell: bash
     - run: docker-compose up -d
       shell: bash
-    - run: while true; do echo "Checking Clair Status..." && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
+    - run: docker tag vulnerables/web-dvwa localhost:5000/${{ inputs.image }}
       shell: bash
-    - run: docker-compose ps
+    - run: docker push localhost:5000/${{ inputs.image }}
       shell: bash
-    - run: |
-        docker build -t localhost:5000/ivanamat/demo:test -f - . << EOF
-        FROM vulnerables/web-dvwa:latest
-        EOF
-        docker push localhost:5000/ivanamat/demo:test
+    - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
       shell: bash
     - run: |
-        docker-compose up -d
-        docker exec clair clairctl -D report -o ${{ inputs.report_format }} registry:5000/ivanamat/demo:test > ${{ inputs.report_path }}
+        export IP_REG=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' registry)
+        docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
-
-#    - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 analyze --local registry.local:5000/ivanamat/demo:test
-#      shell: bash
-#    - run: docker-compose up -d && sleep 10 && docker exec clair /clairctl-linux-amd64 report --local registry.local:5000/ivanamat/demo:test
-#      shell: bash
-    #- run: docker-compose up -d && docker exec clair clairctl -D report -o ${{ inputs.report_format }} ghcr.io/the-iron-bank-of-braavos/clair/ivan:test > ${{ inputs.report_path }}
-    #  shell: bash
-      
-#    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
-#      shell: bash
-#    - run: docker-compose up -d
-#      shell: bash
-#    - run: docker tag vulnerables/web-dvwa localhost:5000/${{ inputs.image }}
-#      shell: bash
-#    - run: docker push localhost:5000/${{ inputs.image }}
-#      shell: bash
-#    - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done 
-#      shell: bash
-#    - run: |
-#        export IP_REG=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' registry) && docker-compose up -d
-#        docker exec clair clairctl -D report -o ${{ inputs.report_format }} $IP_REG:5000/${{ inputs.image }} > ${{ inputs.report_path }}
-#      shell: bash

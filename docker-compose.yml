@@ -11,11 +11,6 @@ services:
     image: registry:2.7
     ports:
       - 5000:5000
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "https://localhost:5000"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
 
   postgres:
     container_name: postgres
@@ -51,14 +46,16 @@ services:
       - CLAIR_CONF=/config/config.yaml
       #- IP_REG=${IP_REG}
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /usr/bin/docker:/usr/bin/docker:ro
       - ./config.yaml:/config/config.yaml:ro
       - ./clairctl-linux-amd64:/clairctl-linux-amd64:ro
       - /tmp/:/tmp/
     depends_on:
-      - registry
+      #- registry
       - postgres
     links:
-      - "registry:local-registry"
+      #- "registry:local-registry"
       - "postgres"
     ports:
       - 6060:6060
