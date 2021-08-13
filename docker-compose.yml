@@ -11,6 +11,11 @@ services:
     image: registry:2.7
     ports:
       - 5000:5000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://localhost:5000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   postgres:
     container_name: postgres
@@ -49,8 +54,10 @@ services:
       - ./clairctl-linux-amd64:/clairctl-linux-amd64:ro
       - /tmp/:/tmp/
     depends_on:
-      - "registry"
-      - "postgres"
+      registry:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     links:
       - "registry:local-registry"
       - "postgres"
