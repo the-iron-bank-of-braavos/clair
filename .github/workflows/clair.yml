@@ -16,7 +16,7 @@ jobs:
       id: clairtest
       uses: ./
       with:
-       image: "test"
+       image: "vulnerables/web-dvwa:latest"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
