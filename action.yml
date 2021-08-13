@@ -35,9 +35,9 @@ runs:
         FROM vulnerables/web-dvwa:latest
         EOF
       shell: bash
-    - run: docker-compose up -d && docker exec clair /clairctl-linux-amd64 --local analyze demo:test
+    - run: docker-compose up -d && docker exec clair /clairctl-linux-amd64 analyze --local demo:test
       shell: bash
-    - run: docker-compose up -d && docker exec clair /clairctl-linux-amd64 --local report demo:test
+    - run: docker-compose up -d && docker exec clair /clairctl-linux-amd64 report --local demo:test
       shell: bash
     #- run: docker-compose up -d && docker exec clair clairctl -D report -o ${{ inputs.report_format }} ghcr.io/the-iron-bank-of-braavos/clair/ivan:test > ${{ inputs.report_path }}
     #  shell: bash
