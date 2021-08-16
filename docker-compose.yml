@@ -11,6 +11,8 @@ services:
     image: postgres@sha256:0c544a9de02082855b4ee592d59685403a8b51acdcd559cef4140ad9ef1396bd
     network_mode: host
     restart: unless-stopped
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data:rw 
 
   clair:
     container_name: clair
@@ -21,11 +23,18 @@ services:
     network_mode: host 
     restart: unless-stopped
     volumes:
-      - /tmp:/tmp
+      - ./reports:/reports:rw
       - ./config.yaml:/config/config.yaml:ro
+      - /tmp:/tmp
 
   registry:
     container_name: registry
     #registry: 2.7.1
     image: registry@sha256:42043edfae481178f07aa077fa872fcc242e276d302f4ac2026d9d2eb65b955f
     network_mode: host
+    volumes:
+      - registry-volume:/var/lib/registry:rw
+    
+  volumes:
+    postgres-volume:
+    registry-volume:
