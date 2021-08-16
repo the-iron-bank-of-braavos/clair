@@ -27,18 +27,3 @@ runs:
       shell: bash
     - run: docker exec clair clairctl -D report localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
-
-#    - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
-#      shell: bash
-#    - run: docker-compose up -d
-#      shell: bash
-#    - run: echo "127.0.0.1 registry" | sudo tee -a /etc/hosts
-#      shell: bash
-#    - run: docker tag vulnerables/web-dvwa registry:5000/${{ inputs.image }}
-#      shell: bash
-#    - run: docker push registry:5000/${{ inputs.image }}
-#      shell: bash
-#    - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done && sleep 30
-#      shell: bash
-#    - run: docker exec clair clairctl -D report -o ${{ inputs.report_format }} registry:5000/${{ inputs.image }} > ${{ inputs.report_path }}
-#      shell: bash
