@@ -28,7 +28,3 @@ notifier:
   migrations: true
   delivery_interval: 1m
   poll_interval: 5m
-
-docker:
-  insecure-registries:
-    - "registry:5000"
