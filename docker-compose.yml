@@ -35,6 +35,6 @@ services:
     volumes:
       - registry-volume:/var/lib/registry:rw
     
-  volumes:
-    postgres-volume:
-    registry-volume:
+volumes:
+  postgres-volume:
+  registry-volume:
