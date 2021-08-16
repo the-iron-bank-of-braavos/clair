@@ -19,7 +19,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2
     - run: sudo setfacl --modify user:65534:rw /var/run/docker.sock
       shell: bash
     - run: docker-compose up -d
