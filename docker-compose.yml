@@ -13,6 +13,12 @@ services:
     restart: unless-stopped
     volumes:
       - postgres-volume:/var/lib/postgresql/data:rw 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clair -d clair"]
+      interval: 10s
+      timeout: 9s
+      retries: 3
+      #start_period: 10s
 
   clair:
     container_name: clair

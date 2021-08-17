@@ -21,13 +21,13 @@ runs:
   steps:
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
-    - run: docker-compose up -d
+    - run: sh ./run.sh
       shell: bash
     - run: docker pull ${{ inputs.image }}
       shell: bash
     - run: docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
       shell: bash
-    - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done
-      shell: bash
+      #- run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done
+      #shell: bash
     - run: docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
