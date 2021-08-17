@@ -21,6 +21,10 @@ runs:
   steps:
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
+    - run: docker-compose up postgres
+      shell: bash
+    - run: while true; do echo "Checking Database Readiness Status" && sleep 5 && docker logs postgres 2>&1 | grep "database system is ready to accept connections" && break; done
+      shell: bash
     - run: docker-compose up -d
       shell: bash
     - run: docker pull ${{ inputs.image }}
