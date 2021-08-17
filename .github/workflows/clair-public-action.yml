@@ -16,6 +16,8 @@ jobs:
     name: Scan image with Clair
     runs-on: ubuntu-latest
     steps:
+    - name: debug
+      run: ls -la $GITHUB_ACTION_PATH
     - name: Clair Test
       id: clairtest
       uses: santander-group/clair-scan-action@feature/location
