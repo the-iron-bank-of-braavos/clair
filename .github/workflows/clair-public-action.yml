@@ -23,6 +23,10 @@ jobs:
         ls -la -github
         echo "****"
         echo $PWD
+        echo "****"
+        env
+        echo "****"
+        echo ${WORKSPACE}
       
     - name: Clair Test
       id: clairtest
