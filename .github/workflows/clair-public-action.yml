@@ -1,0 +1,31 @@
+name: Clair Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+       image:
+         description: 'Container Image'
+         default: "vulnerables/web-dvwa:latest"
+         required: true
+       updater:
+         description: 'Clair updater type'
+         default: "debian"
+         required: true
+jobs:  
+  clair-scan:
+    name: Scan image with Clair
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clair Test
+      id: clairtest
+      uses: santander-group/clair-scan-action@main
+      with:
+       image: ${{ github.event.inputs.image }}
+       report_format: json
+       updater: ${{ github.event.inputs.updater }}
+       report_path: clair-report.json
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: clair-result
+        path: clair-report.json
