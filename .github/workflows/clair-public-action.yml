@@ -17,7 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: debug
-      run: ls -la $GITHUB_ACTION_PATH
+      run: | 
+        ls -la
+        echo "******"
+        ls -la -github
+        echo "****"
+        echo $PWD
+      
     - name: Clair Test
       id: clairtest
       uses: santander-group/clair-scan-action@feature/location
