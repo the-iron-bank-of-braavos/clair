@@ -33,5 +33,5 @@ runs:
       shell: bash
     - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done
       shell: bash
-    - run: docker exec clair clairctl -D report localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
+    - run: docker exec clair clairctl -D report -o xml localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
