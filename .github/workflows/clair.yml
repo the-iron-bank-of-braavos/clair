@@ -10,8 +10,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Pull image to local registry
-      run: |
-       docker pull vulnerables/web-dvwa:latest
+      run: docker pull vulnerables/web-dvwa:latest
     - name: Clair Test
       id: clairtest
       uses: ./
