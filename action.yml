@@ -11,7 +11,7 @@ inputs:
   report_format:
     description: 'Report format. Values: xml | json | text'
     required: false
-    default: 'xml'
+    default: 'json'
   image:
     description: 'Container image to scan'
     required: true
