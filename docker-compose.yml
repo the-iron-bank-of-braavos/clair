@@ -21,19 +21,6 @@ services:
       retries: 3
       #start_period: 10s
 
-  clair:
-    container_name: clair
-    depends_on:
-      - postgres
-    #clair:4.2.0
-    image: quay.io/projectquay/clair@sha256:917df97fd182bf45d880649285b45e730a52e6cca4b70e3b0a810d4e39d43c9a
-    network_mode: host 
-    restart: always
-    volumes:
-      - ./reports:/reports:rw
-      - ./config.yaml:/config/config.yaml:ro
-      - /tmp:/tmp
-
   registry:
     container_name: registry
     #registry: 2.7.1
