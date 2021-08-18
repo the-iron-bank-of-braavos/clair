@@ -4,13 +4,11 @@ timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
 echo "Checking postgres status..."
-docker logs -f postgres > postgres.logs 2>&1
-
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Postgres"
-        cat clair.logs
+        docker logs -n 1000 postgres
         exit 1;
     fi
     
@@ -29,13 +27,11 @@ timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
 echo "Checking clair status..."
-docker logs -f clair > clair.logs 2>&1
-
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Clair"
-        cat clair.logs
+        docker logs -n 1000 postgres
         exit 1;
     fi
     
