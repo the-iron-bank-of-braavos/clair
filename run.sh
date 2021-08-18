@@ -41,7 +41,7 @@ do
     curl --max-time 5 http://localhost:6060 &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
-        echo "Ready!"
+        echo "Clair is ready!"
         exit 0;
     fi
     
