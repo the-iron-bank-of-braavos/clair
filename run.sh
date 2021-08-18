@@ -6,7 +6,7 @@ stoptime=$((timetorun + $(date +%s)))
 # Check if Clair is UP!
 echo "Checking Clair status..."
 
-docker logs -f clair > clair.logs
+docker logs -f clair > clair.logs 2>&1
 
 while [ true ]
 do  
