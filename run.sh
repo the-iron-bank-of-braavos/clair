@@ -1,7 +1,5 @@
 #!/bin/bash
 
-docker-compose up -d
-
 timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
