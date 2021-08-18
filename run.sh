@@ -12,11 +12,11 @@ do
     fi
     
     #docker exec postgres pg_isready -U clair -d clair
-    docker exec postgres psql -U clair -d clair
+    docker exec postgres psql -U clair -d clair &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
-        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
         echo "Postgres is ready!"
+        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
         break;
     fi
     
