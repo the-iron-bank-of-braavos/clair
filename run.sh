@@ -7,6 +7,7 @@ stoptime=$((timetorun + $(date +%s)))
 while [ true ]
 do
     if [[ $(date +%s) > $stoptime ]]; then
+        echo "[Error]: Timeout waiting for Clair"
         exit 1;
     fi
     
@@ -14,6 +15,6 @@ do
     
     if [ "$?" -eq 0 ]; then
         echo "Ready!"
-        exit 0
+        exit 0;
     fi
 done
