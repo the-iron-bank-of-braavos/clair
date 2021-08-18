@@ -19,13 +19,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
-      shell: bash
-    - run: ./run.sh
-      shell: bash
-    - run: docker pull ${{ inputs.image }}
-      shell: bash
-    - run: docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
-      shell: bash
-    - run: docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
+    - run: |
+        sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
+        ./run.sh
+        docker pull ${{ inputs.image }}
+        docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
+        docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
