@@ -19,15 +19,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
+    - run: |
+        sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' $GITHUB_ACTION_PATH/config.yaml
+        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
+        chmod +x $GITHUB_ACTION_PATH/run.sh && $GITHUB_ACTION_PATH/run.sh
+        docker pull ${{ inputs.image }}
+        docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
+        docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
-    - run: docker-compose up -d
-      shell: bash
-    - run: docker pull ${{ inputs.image }}
-      shell: bash
-    - run: docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
-      shell: bash
-    - run: while true; do echo "Checking Clair Status" && sleep 5 && docker logs clair 2>&1 | grep "ready" && break; done
-      shell: bash
-    - run: docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
-      shell: bash
+

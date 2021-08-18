@@ -1,3 +1,4 @@
+
 version: '3'
 
 services:
@@ -10,9 +11,15 @@ services:
     #postgres:9.6.23
     image: postgres@sha256:0c544a9de02082855b4ee592d59685403a8b51acdcd559cef4140ad9ef1396bd
     network_mode: host
-    restart: unless-stopped
+    restart: always
     volumes:
       - postgres-volume:/var/lib/postgresql/data:rw 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clair -d clair"]
+      interval: 10s
+      timeout: 9s
+      retries: 3
+      #start_period: 10s
 
   clair:
     container_name: clair
