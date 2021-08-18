@@ -22,7 +22,7 @@ do
     
     if [ "$?" -eq 0 ]; then
         echo "Ready!"
-        exit 0;
+        break;
     fi
     
     sleep 1;
