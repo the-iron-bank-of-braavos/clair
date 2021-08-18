@@ -16,7 +16,7 @@ do
     
     if [ "$?" -eq 0 ]; then
         echo "Postgres is ready!"
-        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
+        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d registry clair
         break;
     fi
     
