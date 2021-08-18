@@ -4,6 +4,7 @@ timetorun=60
 stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
+echo "Checking Clair status..."
 while [ true ]
 do
     if [[ $(date +%s) > $stoptime ]]; then
@@ -17,4 +18,6 @@ do
         echo "Ready!"
         exit 0;
     fi
+    
+    sleep 1;
 done
