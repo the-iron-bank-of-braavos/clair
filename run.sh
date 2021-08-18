@@ -6,7 +6,8 @@ docker-compose up -d
 STOP=0
 while [ true ]
 do
-    if [[ "$STOP" -eq 4 ]]; then
+    echo "While number: $STOP"
+    if [[ "$STOP" -eq 19 ]]; then
         echo "STOP!"
         break;
     fi
