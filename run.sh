@@ -1,6 +1,6 @@
 #!/bin/bash
 
-timetorun=90
+timetorun=120
 stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
