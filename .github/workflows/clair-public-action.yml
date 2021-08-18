@@ -18,7 +18,7 @@ jobs:
     steps:     
     - name: Clair Test
       id: clairtest
-      uses: santander-group/clair-scan-action@fix/docker-compose
+      uses: the-iron-bank-of-braavos/clair@main
       with:
        image: ${{ github.event.inputs.image }}
        report_format: json
