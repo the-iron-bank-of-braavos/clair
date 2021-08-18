@@ -31,7 +31,7 @@ while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Clair"
-        docker logs -n 1000 postgres
+        docker logs -n 1000 clair
         exit 1;
     fi
     
