@@ -16,7 +16,7 @@ do
     if [ "$?" -eq 0 ]; then
         docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
         echo "Postgres is ready!"
-        exit 0;
+        break;
     fi
     
     sleep 3;
@@ -42,7 +42,7 @@ do
     
     if [ "$?" -eq 0 ]; then
         echo "Clair is ready!"
-        exit 0;
+        break;
     fi
     
     sleep 3;
