@@ -5,10 +5,14 @@ stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
 echo "Checking Clair status..."
+
+docker logs -f clair > clair.logs
+
 while [ true ]
-do
+do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Clair"
+        cat clair.logs
         exit 1;
     fi
     
@@ -19,6 +23,5 @@ do
         exit 0;
     fi
     
-    docker logs clair
     sleep 5;
 done
