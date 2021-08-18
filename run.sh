@@ -3,6 +3,7 @@
 timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
+echo "Checking postgres status..."
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
@@ -11,7 +12,7 @@ do
     fi
     
     #docker exec postgres pg_isready -U clair -d clair
-    docker exec postgres psql -U clair -d clai &> /dev/null 2>&1
+    docker exec postgres psql -U clair -d clair &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
         docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
@@ -26,7 +27,7 @@ timetorun=60
 stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
-echo "Checking Clair status..."
+echo "Checking clair status..."
 
 #docker logs -f clair > clair.logs 2>&1
 
