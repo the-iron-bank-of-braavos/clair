@@ -15,19 +15,7 @@ jobs:
   clair-scan:
     name: Scan image with Clair
     runs-on: ubuntu-latest
-    steps:
-    - name: debug
-      run: | 
-        ls -la
-        echo "******"
-        ls -la -github
-        echo "****"
-        echo $PWD
-        echo "****"
-        env
-        echo "****"
-        echo ${WORKSPACE}
-      
+    steps:     
     - name: Clair Test
       id: clairtest
       uses: santander-group/clair-scan-action@fix/docker-compose
