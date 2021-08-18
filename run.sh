@@ -1,6 +1,6 @@
 #!/bin/bash
 
-timetorun=90
+timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
 while [ true ]
@@ -11,7 +11,7 @@ do
     fi
     
     #docker exec postgres pg_isready -U clair -d clair
-    docker exec postgres psql -U clair -d clair &> /dev/null 2>&1
+    docker exec postgres psql -U clair -d clai &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
         docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
@@ -22,19 +22,19 @@ do
     sleep 3;
 done
 
-timetorun=90
+timetorun=60
 stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
 echo "Checking Clair status..."
 
-docker logs -f clair > clair.logs 2>&1
+#docker logs -f clair > clair.logs 2>&1
 
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Clair"
-        cat clair.logs
+ #       cat clair.logs
         exit 1;
     fi
     
