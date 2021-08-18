@@ -20,7 +20,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
+        sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' $GITHUB_ACTION_PATH/config.yaml
         ./run.sh
         docker pull ${{ inputs.image }}
         docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
