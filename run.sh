@@ -19,5 +19,6 @@ do
         exit 0;
     fi
     
-    sleep 1;
+    docker logs clair
+    sleep 5;
 done
