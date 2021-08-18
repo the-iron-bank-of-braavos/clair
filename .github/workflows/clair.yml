@@ -7,16 +7,13 @@ jobs:
     name: Scan image with Clair
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
     - name: Pull image to local registry
-      run: |
-       docker pull vulnerables/web-dvwa
+      run: docker pull vulnerables/web-dvwa:latest
     - name: Clair Test
       id: clairtest
-      uses: ./
+      uses: the-iron-bank-of-braavos/clair@main
       with:
-       image: "test"
+       image: "vulnerables/web-dvwa:latest"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
