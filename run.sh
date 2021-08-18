@@ -18,11 +18,9 @@ do
     
     curl http://localhost:6060 &> /dev/null 2>&1
     
-    docker ps
-    
     if [ "$?" -eq 0 ]; then
         echo "Ready!"
-        break;
+        exit 0;
     fi
     
     sleep 1;
