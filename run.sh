@@ -15,7 +15,7 @@ do
     curl http://localhost:6060 &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
-        echo "Clair is ready!"
+        echo "Ready!"
         exit 0
     fi
 done
