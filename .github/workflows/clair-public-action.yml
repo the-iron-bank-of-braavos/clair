@@ -16,28 +16,18 @@ jobs:
     name: Scan image with Clair
     runs-on: ubuntu-latest
     steps:
-    - name: debug
-      run: | 
-        ls -la
-        echo "******"
-        ls -la -github
-        echo "****"
-        echo $PWD
-        echo "****"
-        env
-        echo "****"
-        echo ${WORKSPACE}
-      
+    - name: Pull image to local registry
+      run: docker pull vulnerables/web-dvwa:latest
     - name: Clair Test
       id: clairtest
       uses: the-iron-bank-of-braavos/clair@main
       with:
-       image: ${{ github.event.inputs.image }}
-       report_format: json
-       updater: ${{ github.event.inputs.updater }}
-       report_path: clair-report.json
+       image: "vulnerables/web-dvwa:latest"
+       report_format: xml
+       updater: debian
+       report_path: clair-report.xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: clair-result
-        path: clair-report.json
+        path: clair-report.xml
