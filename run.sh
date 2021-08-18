@@ -1,13 +1,13 @@
 #!/bin/bash
 
-timetorun=30
+timetorun=60
 stoptime=$((timetorun + $(date +%s)))
 
 # Check if Clair is UP!
 while [ true ]
 do
     if [[ $(date +%s) > $stoptime ]]; then
-        break;
+        exit 1;
     fi
     
     curl http://localhost:6060 &> /dev/null 2>&1
