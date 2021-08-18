@@ -21,7 +21,7 @@ runs:
   steps:
     - run: sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' config.yaml
       shell: bash
-    - run: sh ./run.sh
+    - run: ./run.sh
       shell: bash
     - run: docker pull ${{ inputs.image }}
       shell: bash
