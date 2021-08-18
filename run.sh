@@ -1,4 +1,5 @@
 #!/bin/bash
+docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d postgres
 
 timetorun=30
 stoptime=$((timetorun + $(date +%s)))
