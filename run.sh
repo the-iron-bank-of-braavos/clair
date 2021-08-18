@@ -4,14 +4,16 @@ timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
 echo "Checking postgres status..."
+docker logs -f postgres > postgres.logs 2>&1
+
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Postgres"
+        cat clair.logs
         exit 1;
     fi
     
-    #docker exec postgres pg_isready -U clair -d clair
     docker exec postgres psql -U clair -d clair &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
@@ -20,22 +22,20 @@ do
         break;
     fi
     
-    sleep 3;
+    sleep 1;
 done
 
-timetorun=60
+timetorun=30
 stoptime=$((timetorun + $(date +%s)))
 
-# Check if Clair is UP!
 echo "Checking clair status..."
-
-#docker logs -f clair > clair.logs 2>&1
+docker logs -f clair > clair.logs 2>&1
 
 while [ true ]
 do  
     if [[ $(date +%s) > $stoptime ]]; then
         echo "[Error]: Timeout waiting for Clair"
- #       cat clair.logs
+        cat clair.logs
         exit 1;
     fi
     
@@ -46,5 +46,5 @@ do
         break;
     fi
     
-    sleep 3;
+    sleep 1;
 done
