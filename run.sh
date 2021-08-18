@@ -16,12 +16,12 @@ do
         exit 1;
     fi
     
-    curl http://localhost:6060 &> /dev/null 2>&1
+    curl --max-time 5 http://localhost:6060 &> /dev/null 2>&1
     
     if [ "$?" -eq 0 ]; then
         echo "Ready!"
         exit 0;
     fi
     
-    sleep 1;
+    sleep 3;
 done
