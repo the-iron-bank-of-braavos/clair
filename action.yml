@@ -21,7 +21,7 @@ runs:
   steps:
     - run: |
         sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' $GITHUB_ACTION_PATH/config.yaml
-        docker-compose up -d -f $GITHUB_ACTION_PATH/docker-compose.yml
+        docker-compose -f $GITHUB_ACTION_PATH/docker-compose.yml up -d
         sh $GITHUB_ACTION_PATH/run.sh
         docker pull ${{ inputs.image }}
         docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
