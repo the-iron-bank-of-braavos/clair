@@ -15,6 +15,10 @@ inputs:
   image:
     description: 'Container image to scan'
     required: true
+  local:
+    description: 'Local image. Values: yes | no'
+    required: false
+    default: 'yes'
 
 runs:
   using: "composite"
@@ -22,7 +26,9 @@ runs:
     - run: |
         sed -i 's/SET_UPDATER/${{ inputs.updater }}/g' $GITHUB_ACTION_PATH/config.yaml
         chmod +x $GITHUB_ACTION_PATH/run.sh && $GITHUB_ACTION_PATH/run.sh
-        docker pull ${{ inputs.image }}
+        if [[ "${{ inputs.local }}" != "yes" ]]; then \
+          docker pull ${{ inputs.image }}
+        fi
         docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
         docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
       shell: bash
