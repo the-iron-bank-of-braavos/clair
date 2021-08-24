@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Pull image to local registry
-      run: docker pull ubuntu:latest
+      run: docker pull ubuntu:14.04
     - name: Clair Test
       id: clairtest
       uses: the-iron-bank-of-braavos/clair@fix/local-and-remote
       with:
-       image: "ubuntu:latest"
+       image: "ubuntu:14.04"
        report_format: xml
        updater: ubuntu
        report_path: clair-report.xml
