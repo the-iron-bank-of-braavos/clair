@@ -31,5 +31,7 @@ runs:
         fi
         docker tag ${{ inputs.image }} localhost:5000/${{ inputs.image }} && docker push localhost:5000/${{ inputs.image }}
         docker exec clair clairctl -D report -o ${{ inputs.report_format }} localhost:5000/${{ inputs.image }} > ${{ inputs.report_path }}
+        ls -la ${{ inputs.report_path }}
+        cat ${{ inputs.report_path }}
       shell: bash
 
