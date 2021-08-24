@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Pull image to local registry
-      run: docker pull vulnerables/web-dvwa:latest
+      run: docker pull ubuntu:latest
     - name: Clair Test
       id: clairtest
       uses: the-iron-bank-of-braavos/clair@fix/local-and-remote
       with:
-       image: "vulnerables/web-dvwa:latest"
+       image: "ubuntu:latest"
        report_format: xml
-       updater: debian
+       updater: ubuntu
        report_path: clair-report.xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
