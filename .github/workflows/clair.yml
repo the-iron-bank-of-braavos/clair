@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Pull image to local registry
-      run: docker pull vulnerables/web-dvwa
+      run: docker pull vulnerables/web-dvwa:latest
     - name: Clair Test
       id: clairtest
-      uses: the-iron-bank-of-braavos/clair@fix/local-and-remote
+      uses: the-iron-bank-of-braavos/clair@main
       with:
        image: "vulnerables/web-dvwa"
        report_format: xml
