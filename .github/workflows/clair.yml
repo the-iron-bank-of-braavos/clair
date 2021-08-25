@@ -13,7 +13,7 @@ jobs:
       id: clairtest
       uses: the-iron-bank-of-braavos/clair@main
       with:
-       image: "vulnerables/web-dvwa:latest"
+       image: "vulnerables/web-dvwa"
        report_format: xml
        updater: debian
        report_path: clair-report.xml
