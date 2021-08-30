@@ -14,7 +14,7 @@ matcher:
   migrations: true
 updaters:
   sets:
-    - "SET_UPDATER"
+    - "ubuntu"
 matchers:
   disable_updaters: false
   config:
